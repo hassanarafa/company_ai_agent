@@ -13,7 +13,7 @@
         <form @submit.prevent="handleLogin" class="space-y-4">
           <div>
             <label class="block text-xs font-medium text-slate-300 mb-1">Email Address</label>
-            <input type="email" v-model="loginForm.email" placeholder="ahmed@example.com" required
+            <input type="email" v-model="loginForm.email" placeholder="name@example.com" required
               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-emerald-500 transition">
           </div>
 
@@ -95,9 +95,10 @@
           <div class="flex items-center gap-3 overflow-hidden">
             <div
               class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-white shrink-0">
-              AH</div>
+              {{ userInitials }}
+            </div>
             <div class="overflow-hidden">
-              <h4 class="text-xs font-bold text-white truncate">Ahmed Al-Harthi</h4>
+              <h4 class="text-xs font-bold text-white truncate">{{ userName }}</h4>
               <p class="text-[10px] text-slate-400 truncate">Procurement Manager</p>
             </div>
           </div>
@@ -115,7 +116,7 @@
         <header
           class="bg-white border-b border-slate-200 p-4 md:px-8 md:py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xs">
           <div>
-            <h1 class="text-lg md:text-xl font-bold text-slate-900">Welcome back, Ahmed 👋</h1>
+            <h1 class="text-lg md:text-xl font-bold text-slate-900">Welcome back, {{ userName }} 👋</h1>
             <p class="text-xs text-slate-500">Here's what's happening with your supply network today.</p>
           </div>
           <div class="flex items-center gap-3 w-full md:w-auto">
@@ -279,7 +280,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const isAuthenticated = ref(false)
 const loginLoading = ref(false)
@@ -287,6 +288,24 @@ const loginError = ref('')
 const loginForm = ref({
   email: '',
   password: ''
+})
+
+const userName = computed(() => {
+  if (!loginForm.value.email) return 'User'
+  const namePart = loginForm.value.email.split('@')[0]
+  return namePart
+    .split('.')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+})
+
+const userInitials = computed(() => {
+  if (!loginForm.value.email) return 'U'
+  const parts = loginForm.value.email.split('@')[0].split('.')
+  if (parts.length > 1) {
+    return (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase()
+  }
+  return parts[0].substring(0, 2).toUpperCase()
 })
 
 const handleLogin = () => {
