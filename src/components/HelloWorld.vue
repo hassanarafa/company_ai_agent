@@ -81,7 +81,7 @@
           <p class="text-xs text-slate-500">Here's what's happening with your supply network today.</p>
         </div>
         <div class="flex items-center gap-3 w-full md:w-auto">
-          <input type="text" placeholder="Search suppliers, orders..."
+          <input type="text" placeholder="Search suppliers, orders, products..."
             class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs w-full md:w-64 focus:outline-none focus:border-emerald-500">
           <div class="bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-xs font-semibold shrink-0">
             <span>PIF Company</span>
@@ -136,7 +136,7 @@
                     class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">POOL-124</span>
                   <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded font-medium">On Track</span>
                 </div>
-                <p class="text-xs text-slate-500 mt-1">Industrial Cable X • Created on 12 May 2024</p>
+                <p class="text-xs text-slate-500 mt-1">Building Materials Inventory • Created on 12 May 2024</p>
               </div>
               <button
                 class="bg-slate-900 text-white text-xs px-4 py-2 rounded-xl font-medium hover:bg-slate-800 transition">View
@@ -162,30 +162,30 @@
               </div>
             </div>
 
-            <div class="bg-slate-50 p-4 md:p-5 rounded-xl border border-slate-200 mt-4">
-              <h3 class="font-bold text-xs text-slate-800 mb-3">فحص وتدقيق طلب توريد جديد (AI Agent)</h3>
+            <div class="bg-slate-50 p-4 md:p-5 rounded-xl border border-slate-200 mt-4 space-y-3">
+              <h3 class="font-bold text-xs text-slate-800">AI Inventory & Quota Verification Agent</h3>
               <form @submit.prevent="submitOrder" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <select v-model="form.company"
                   class="bg-white border border-slate-200 rounded-lg p-2.5 text-xs text-slate-800">
-                  <option>شركة النور للمقاولات</option>
-                  <option>شركة البناء الحديث</option>
+                  <option>Al-Noor Contracting Co.</option>
+                  <option>Modern Building Co.</option>
                 </select>
                 <select v-model="form.material"
                   class="bg-white border border-slate-200 rounded-lg p-2.5 text-xs text-slate-800">
-                  <option value="رمل">رمل (متر مكعب)</option>
-                  <option value="زلط">زلط (متر مكعب)</option>
+                  <option value="Sand">Sand (Cubic Meters)</option>
+                  <option value="Gravel">Gravel (Cubic Meters)</option>
                 </select>
-                <input type="number" v-model="form.qty" placeholder="الكمية المطلوبة"
+                <input type="number" v-model="form.qty" placeholder="Requested Qty"
                   class="bg-white border border-slate-200 rounded-lg p-2.5 text-xs text-slate-800">
                 <button type="submit" :disabled="loading"
                   class="sm:col-span-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-lg text-xs transition shadow-sm">
-                  {{ loading ? 'جاري التحقق عبر AI Agent...' : 'فحص واعتماد الطلب' }}
+                  {{ loading ? 'Verifying with AI Agent...' : 'Inspect and Approve Order' }}
                 </button>
               </form>
 
               <div v-if="agentResponse"
                 class="mt-3 p-3 bg-white border border-emerald-200 rounded-lg text-xs text-slate-700">
-                <strong class="text-emerald-700">قرار النظام:</strong> {{ agentResponse }}
+                <strong class="text-emerald-700">AI Decision:</strong> {{ agentResponse }}
               </div>
             </div>
 
@@ -208,7 +208,6 @@
               </div>
             </div>
 
-            <!-- Ask POOL (AI Chat Box) -->
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
               <div class="flex justify-between items-center">
                 <h3 class="font-bold text-xs text-slate-900">Ask POOL</h3>
@@ -226,7 +225,7 @@
               <div class="relative mt-2">
                 <input type="text" placeholder="Type your question..."
                   class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500">
-                <span class="absolute left-2.5 top-2 text-emerald-600 font-bold cursor-pointer">➔</span>
+                <span class="absolute right-3 top-2 text-emerald-600 font-bold cursor-pointer">➔</span>
               </div>
             </div>
 
@@ -244,8 +243,8 @@ import { ref } from 'vue'
 
 const mobileMenuOpen = ref(false)
 const form = ref({
-  company: 'شركة النور للمقاولات',
-  material: 'رمل',
+  company: 'Al-Noor Contracting Co.',
+  material: 'Sand',
   qty: ''
 })
 
@@ -258,7 +257,7 @@ const submitOrder = async () => {
   agentResponse.value = ''
 
   setTimeout(() => {
-    agentResponse.value = `تمت مراجعة الطلب لـ [${form.value.company}]. الكمية المطلوبة (${form.value.qty} متر من ${form.value.material}) مطابقة للحصة ومتاحة في المخزون الرئيسي. تمت الموافقة آلياً.`
+    agentResponse.value = `Order reviewed successfully for [${form.value.company}]. The requested quantity (${form.value.qty} m³ of ${form.value.material}) is within quota limits and available in stock. Approved automatically.`
     loading.value = false
   }, 1500)
 }
