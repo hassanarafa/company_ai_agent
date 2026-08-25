@@ -1,5 +1,5 @@
 <script setup>
-/* eslint-disable vue/multi-word-component-names, no-undef */
+/* eslint-disable vue/multi-word-component-names */
 defineProps({
     navItems: Array,
     activeTab: String,
@@ -10,8 +10,8 @@ defineEmits(['update:activeTab', 'logout'])
 
 <template>
     <aside :class="[
-        'fixed inset-y-0 left-0 z-50 w-64 bg-black text-zinc-300 flex flex-col justify-between border-r border-zinc-900 transition-transform duration-300 ease-in-out md:static md:translate-x-0',
-        mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        'fixed inset-y-0 left-0 z-50 w-64 bg-black text-zinc-300 flex flex-col justify-between border-r border-zinc-900 transition-transform duration-300 ease-in-out md:static md:translate-x-0 shrink-0',
+        mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
     ]">
         <div class="p-6">
             <div class="mb-10">
