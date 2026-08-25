@@ -1,279 +1,212 @@
 <template>
   <div>
-    <div v-if="!isAuthenticated" class="min-h-screen bg-slate-950 flex items-center justify-center p-6" dir="ltr">
-      <div class="max-w-md w-full bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl space-y-6">
+    <!-- LOGIN VIEW -->
+    <div v-if="!isAuthenticated" class="min-h-screen bg-black flex items-center justify-center p-6 text-white"
+      dir="ltr">
+      <div class="max-w-md w-full bg-zinc-950 border border-zinc-800 p-8 rounded-2xl shadow-2xl space-y-6">
         <div class="text-center">
-          <div class="inline-block text-2xl font-black text-white tracking-wider mb-2">
-            P<span class="text-emerald-500">OOL</span>
-          </div>
-          <h2 class="text-lg font-bold text-slate-100">Sign in to your account</h2>
-          <p class="text-xs text-slate-400 mt-1">Supply Intelligence Network</p>
+          <h1 class="text-3xl font-black tracking-widest text-white mb-1">PO<span style="color: #38872c;">O</span>L</h1>
+          <p class="text-[9px] tracking-widest uppercase font-bold" style="color: #38872c;">Connecting Demand to Local
+            Capability</p>
         </div>
 
         <form @submit.prevent="handleLogin" class="space-y-4">
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Email Address</label>
+            <label class="block text-xs font-medium text-zinc-400 mb-1">Email Address</label>
             <input type="email" v-model="loginForm.email" placeholder="name@example.com" required
-              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-emerald-500 transition">
+              class="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none transition"
+              style="focus-border-color: #38872c;" @focus="$event.target.style.borderColor = '#38872c'"
+              @blur="$event.target.style.borderColor = '#27272a'">
           </div>
 
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Password</label>
+            <label class="block text-xs font-medium text-zinc-400 mb-1">Password</label>
             <input type="password" v-model="loginForm.password" placeholder="••••••••" required
-              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-emerald-500 transition">
+              class="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none transition"
+              @focus="$event.target.style.borderColor = '#38872c'" @blur="$event.target.style.borderColor = '#27272a'">
           </div>
 
           <button type="submit" :disabled="loginLoading"
-            class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-xs transition shadow-lg disabled:opacity-50">
+            class="w-full text-black font-extrabold py-3 rounded-xl text-xs transition shadow-lg disabled:opacity-50"
+            style="background-color: #38872c;">
             {{ loginLoading ? 'Authenticating...' : 'Sign In' }}
           </button>
         </form>
 
-        <p v-if="loginError" class="text-xs text-rose-500 text-center">{{ loginError }}</p>
+        <p v-if="loginError" class="text-xs text-red-500 text-center">{{ loginError }}</p>
       </div>
     </div>
 
-    <div v-else class="min-h-screen bg-slate-100 text-slate-800 font-sans flex flex-col md:flex-row" dir="ltr">
+    <!-- MAIN DASHBOARD VIEW -->
+    <div v-else class="min-h-screen bg-black text-white font-sans flex flex-col md:flex-row" dir="ltr">
 
-      <div class="md:hidden bg-slate-950 text-white p-4 flex justify-between items-center border-b border-slate-800">
-        <div class="flex items-center gap-2">
-          <span class="text-xl font-black tracking-wider">P<span class="text-emerald-500">OOL</span></span>
-          <span class="text-[10px] text-slate-400 border border-slate-700 px-1.5 py-0.5 rounded">Supply Network</span>
+      <!-- Mobile Top Bar -->
+      <div class="md:hidden bg-zinc-950 text-white p-4 flex justify-between items-center border-b border-zinc-900">
+        <div>
+          <h1 class="font-black tracking-widest">PO<span style="color: #38872c;">O</span>L</h1>
+          <p class="text-[8px] tracking-wider uppercase" style="color: #38872c;">Connecting Demand to Local Capability
+          </p>
         </div>
-        <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-slate-300 focus:outline-none p-1">
+        <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-zinc-300 focus:outline-none p-1">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
       </div>
 
+      <!-- Sidebar Navigation -->
       <aside :class="[
-        'fixed inset-y-0 left-0 z-50 w-64 bg-slate-950 text-slate-300 flex flex-col justify-between border-r border-slate-800 transition-transform duration-300 ease-in-out md:static md:translate-x-0',
+        'fixed inset-y-0 left-0 z-50 w-64 bg-black text-zinc-300 flex flex-col justify-between border-r border-zinc-900 transition-transform duration-300 ease-in-out md:static md:translate-x-0',
         mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       ]">
-        <div>
-          <div class="p-6 hidden md:flex items-center gap-2">
-            <span class="text-xl font-black text-white tracking-wider">P<span class="text-emerald-500">OOL</span></span>
-            <span class="text-[10px] text-slate-400 border border-slate-700 px-1.5 py-0.5 rounded">Supply Network</span>
+        <div class="p-6">
+          <!-- Logo Header -->
+          <div class="mb-10">
+            <h1 class="text-2xl font-black tracking-widest text-white">PO<span style="color: #38872c;">O</span>L</h1>
+            <p class="text-[8px] tracking-wider font-bold uppercase mt-0.5" style="color: #38872c;">Connecting Demand to
+              Local Capability</p>
           </div>
 
-          <div class="p-4 flex justify-between items-center md:hidden border-b border-slate-900">
-            <span class="font-bold text-white">Menu</span>
-            <button @click="mobileMenuOpen = false" class="text-slate-400 hover:text-white">✕</button>
-          </div>
-
-          <nav class="mt-4 px-3 space-y-1">
-            <a href="#"
-              class="flex items-center gap-3 px-4 py-3 bg-emerald-500/10 text-emerald-400 font-medium rounded-xl border border-emerald-500/20">
-              <span>📊</span> Dashboard
-            </a>
-            <a href="#"
-              class="flex items-center gap-3 px-4 py-3 hover:bg-slate-900 text-slate-400 hover:text-white rounded-xl transition">
-              <span>➕</span> New Demand
-            </a>
-            <a href="#"
-              class="flex items-center gap-3 px-4 py-3 hover:bg-slate-900 text-slate-400 hover:text-white rounded-xl transition">
-              <span>🏢</span> Suppliers
-            </a>
-            <a href="#"
-              class="flex items-center gap-3 px-4 py-3 hover:bg-slate-900 text-slate-400 hover:text-white rounded-xl transition">
-              <span>📦</span> Orders
-            </a>
-            <a href="#"
-              class="flex items-center gap-3 px-4 py-3 hover:bg-slate-900 text-slate-400 hover:text-white rounded-xl transition">
-              <span>⚡</span> POOL Score
-            </a>
-            <a href="#"
-              class="flex items-center justify-between px-4 py-3 hover:bg-slate-900 text-slate-400 hover:text-white rounded-xl transition">
-              <span class="flex items-center gap-3">🤖 Ask POOL</span>
-              <span class="bg-indigo-600 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">Beta</span>
-            </a>
+          <!-- Nav Items -->
+          <nav class="space-y-2 text-xs">
+            <button v-for="(item, index) in navItems" :key="item" @click="activeTab = item" :class="[
+              'w-full text-left px-4 py-3 rounded-xl transition flex items-center gap-3 font-medium',
+              activeTab === item
+                ? 'bg-zinc-900 text-white shadow-inner'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'
+            ]" :style="activeTab === item ? 'border: 1px solid rgba(37, 150, 190, 0.4);' : ''">
+              <span class="text-[10px] font-bold" style="color: #38872c;">0{{ index + 1 }}</span>
+              <span>{{ item }}</span>
+            </button>
           </nav>
         </div>
 
-        <div class="p-4 border-t border-slate-900 flex items-center justify-between">
-          <div class="flex items-center gap-3 overflow-hidden">
-            <div
-              class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-white shrink-0">
-              {{ userInitials }}
-            </div>
-            <div class="overflow-hidden">
-              <h4 class="text-xs font-bold text-white truncate">{{ userName }}</h4>
-              <p class="text-[10px] text-slate-400 truncate">Procurement Manager</p>
-            </div>
+        <!-- Bottom Footer info / Logout -->
+        <div class="p-6 border-t border-zinc-900 text-[10px] text-zinc-500 space-y-3">
+          <div>
+            <p class="font-bold text-zinc-400 mb-1">Committee demo flow</p>
+            <p>Demand → Capability → Pool → Gap → Growth</p>
           </div>
-          <button @click="isAuthenticated = false" class="text-slate-400 hover:text-rose-400 text-xs transition p-1"
-            title="Logout">
-            ⎋
-          </button>
+          <div class="pt-2 border-t border-zinc-900 flex items-center justify-between">
+            <span>AI understands & explains.</span>
+            <button @click="isAuthenticated = false" class="text-red-400 hover:text-red-300 font-bold">Logout</button>
+          </div>
         </div>
       </aside>
 
+      <!-- Overlay for mobile drawer -->
       <div v-if="mobileMenuOpen" @click="mobileMenuOpen = false" class="fixed inset-0 bg-black/50 z-40 md:hidden"></div>
 
-      <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <!-- Main Dashboard Content Area -->
+      <main class="flex-1 flex flex-col min-w-0 overflow-y-auto p-4 md:p-8 space-y-6">
 
-        <header
-          class="bg-white border-b border-slate-200 p-4 md:px-8 md:py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xs">
-          <div>
-            <h1 class="text-lg md:text-xl font-bold text-slate-900">Welcome back, {{ userName }} 👋</h1>
-            <p class="text-xs text-slate-500">Here's what's happening with your supply network today.</p>
+        <!-- Top Status Bar -->
+        <div class="flex justify-between items-center text-[11px] text-zinc-400 border-b border-zinc-900 pb-3">
+          <span class="tracking-widest uppercase font-semibold text-zinc-400">
+            PIF MUSAHAMA HACKATHON — Welcome, {{ userName }}
+          </span>
+          <div class="flex items-center gap-2 bg-zinc-950 border border-zinc-800 px-3 py-1 rounded-full"
+            style="color: #38872c;">
+            <span class="w-2 h-2 rounded-full animate-pulse" style="background-color: #38872c;"></span>
+            <span>Capability data connected</span>
           </div>
-          <div class="flex items-center gap-3 w-full md:w-auto">
-            <input type="text" placeholder="Search suppliers, orders, products..."
-              class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs w-full md:w-64 focus:outline-none focus:border-emerald-500">
-            <div class="bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-xs font-semibold shrink-0">
-              <span>PIF Company</span>
-            </div>
-          </div>
-        </header>
-
-        <div class="p-4 md:p-8 space-y-6">
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <p class="text-xs text-slate-500 font-medium">Active Orders</p>
-              <div class="flex justify-between items-baseline mt-2">
-                <h3 class="text-2xl font-bold text-slate-900">24</h3>
-                <span class="text-xs text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded">+15% vs last
-                  month</span>
-              </div>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <p class="text-xs text-slate-500 font-medium">Demand Fulfilled</p>
-              <div class="flex justify-between items-baseline mt-2">
-                <h3 class="text-2xl font-bold text-slate-900">91%</h3>
-                <span class="text-xs text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded">+7% vs last
-                  month</span>
-              </div>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <p class="text-xs text-slate-500 font-medium">Active Suppliers</p>
-              <div class="flex justify-between items-baseline mt-2">
-                <h3 class="text-2xl font-bold text-slate-900">68</h3>
-                <span class="text-xs text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded">+8 vs last
-                  month</span>
-              </div>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <p class="text-xs text-slate-500 font-medium">At Risk</p>
-              <div class="flex justify-between items-baseline mt-2">
-                <h3 class="text-2xl font-bold text-rose-600">3</h3>
-                <span class="text-xs text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded">-2 vs last month</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-            <div class="lg:col-span-2 bg-white p-5 md:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
-              <div
-                class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-4 gap-3">
-                <div>
-                  <div class="flex flex-wrap items-center gap-2">
-                    <h2 class="font-bold text-slate-900">Active Order</h2>
-                    <span
-                      class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">POOL-124</span>
-                    <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded font-medium">On Track</span>
-                  </div>
-                  <p class="text-xs text-slate-500 mt-1">Building Materials Inventory • Created on 12 May 2024</p>
-                </div>
-                <button
-                  class="bg-slate-900 text-white text-xs px-4 py-2 rounded-xl font-medium hover:bg-slate-800 transition">View
-                  Details →</button>
-              </div>
-
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                  <span class="text-slate-500">Required</span>
-                  <p class="text-sm md:text-base font-bold text-slate-900 mt-1">100,000 units</p>
-                </div>
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                  <span class="text-slate-500">Allocated</span>
-                  <p class="text-sm md:text-base font-bold text-emerald-600 mt-1">100,000 ✓</p>
-                </div>
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                  <span class="text-slate-500">Delivered</span>
-                  <p class="text-sm md:text-base font-bold text-slate-900 mt-1">42%</p>
-                </div>
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                  <span class="text-slate-500">Total Cost</span>
-                  <p class="text-sm md:text-base font-bold text-slate-900 mt-1">SAR 8.24M</p>
-                </div>
-              </div>
-
-              <div class="bg-slate-50 p-4 md:p-5 rounded-xl border border-slate-200 mt-4 space-y-3">
-                <h3 class="font-bold text-xs text-slate-800">AI Inventory & Quota Verification Agent</h3>
-                <form @submit.prevent="submitOrder" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <select v-model="form.company"
-                    class="bg-white border border-slate-200 rounded-lg p-2.5 text-xs text-slate-800">
-                    <option>Al-Noor Contracting Co.</option>
-                    <option>Modern Building Co.</option>
-                  </select>
-                  <select v-model="form.material"
-                    class="bg-white border border-slate-200 rounded-lg p-2.5 text-xs text-slate-800">
-                    <option value="Sand">Sand (Cubic Meters)</option>
-                    <option value="Gravel">Gravel (Cubic Meters)</option>
-                  </select>
-                  <input type="number" v-model="form.qty" placeholder="Requested Qty"
-                    class="bg-white border border-slate-200 rounded-lg p-2.5 text-xs text-slate-800">
-                  <button type="submit" :disabled="loading"
-                    class="sm:col-span-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-lg text-xs transition shadow-sm">
-                    {{ loading ? 'Verifying with AI Agent...' : 'Inspect and Approve Order' }}
-                  </button>
-                </form>
-
-                <div v-if="agentResponse"
-                  class="mt-3 p-3 bg-white border border-emerald-200 rounded-lg text-xs text-slate-700">
-                  <strong class="text-emerald-700">AI Decision:</strong> {{ agentResponse }}
-                </div>
-              </div>
-
-            </div>
-
-            <div class="space-y-6">
-              <div class="bg-rose-50 border border-rose-200 p-5 rounded-2xl shadow-xs">
-                <div class="flex items-center gap-2 text-rose-700 font-bold text-xs mb-1">
-                  <span>⚠️</span> Supply Risk Detected
-                </div>
-                <p class="text-xs text-slate-600">Supplier C is projected to be 6 days late.</p>
-
-                <div class="mt-4 bg-white p-4 rounded-xl border border-rose-100 space-y-3">
-                  <h4 class="text-xs font-bold text-slate-900">POOL Recommendation</h4>
-                  <p class="text-[11px] text-slate-500">Move 10,000 units from Supplier C to Supplier B to protect the
-                    required delivery date.</p>
-                  <button
-                    class="w-full bg-slate-900 text-white text-xs py-2.5 rounded-lg font-medium hover:bg-slate-800 transition">Review
-                    Reallocation →</button>
-                </div>
-              </div>
-
-              <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
-                <div class="flex justify-between items-center">
-                  <h3 class="font-bold text-xs text-slate-900">Ask POOL</h3>
-                  <span class="text-[10px] bg-indigo-100 text-indigo-700 font-bold px-2 py-0.5 rounded">Beta</span>
-                </div>
-                <div class="bg-slate-50 p-2.5 rounded-xl text-xs text-slate-600 border border-slate-100">
-                  How can I help you today?
-                </div>
-                <div class="space-y-1 text-[11px] text-slate-500">
-                  <p class="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:bg-slate-100 cursor-pointer">Find a
-                    lower-risk option...</p>
-                  <p class="bg-slate-50 p-2 rounded-lg border border-slate-100 hover:bg-slate-100 cursor-pointer">Can we
-                    fulfill 150,000 units instead?</p>
-                </div>
-                <div class="relative mt-2">
-                  <input type="text" placeholder="Type your question..."
-                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500">
-                  <span class="absolute right-3 top-2 text-emerald-600 font-bold cursor-pointer">➔</span>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
         </div>
+
+        <!-- Overview Header & Main Banner Card -->
+        <div class="space-y-4">
+          <h2 class="text-2xl font-bold tracking-tight text-white">Overview</h2>
+
+          <!-- Banner Card -->
+          <div
+            class="bg-zinc-950 border border-zinc-900 p-8 rounded-2xl shadow-xl relative overflow-hidden flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+            <div class="space-y-3 max-w-2xl">
+              <span class="text-[10px] font-bold tracking-widest uppercase" style="color: #38872c;">POOL INTELLIGENCE
+                LAYER</span>
+              <h3 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-snug">
+                Saudi demand exists.<br>
+                Local capability exists.<br>
+                <span style="color: #38872c;">PO<span class="text-white">O</span>L</span> connects the two.
+              </h3>
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                POOL transforms fragmented portfolio demand and supplier data into a live view of qualified national
+                capacity — then reveals exactly where local capabilities need to grow.
+              </p>
+            </div>
+
+            <!-- Right Metrics Indicator -->
+            <div class="flex items-center gap-6 bg-black border border-zinc-800 px-6 py-5 rounded-xl shrink-0">
+              <div class="text-center">
+                <p class="text-2xl font-black text-white">2.4M</p>
+                <span class="text-[9px] text-zinc-500 tracking-widest uppercase">DEMAND</span>
+              </div>
+              <span class="text-lg" style="color: #38872c;">→</span>
+              <div class="text-center">
+                <p class="text-2xl font-black" style="color: #38872c;">1.7M</p>
+                <span class="text-[9px] text-zinc-500 tracking-widest uppercase">CAPACITY</span>
+              </div>
+              <span class="text-lg" style="color: #38872c;">→</span>
+              <div class="text-center">
+                <p class="text-2xl font-black text-white">700K</p>
+                <span class="text-[9px] text-zinc-500 tracking-widest uppercase">OPPORTUNITY</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Grid Metric Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2">
+            <span class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase">AGGREGATED DEMAND</span>
+            <h4 class="text-3xl font-black text-white">2.4M</h4>
+            <p class="text-[11px] text-zinc-400">Across current buyer requests</p>
+          </div>
+
+          <div class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2">
+            <span class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase">QUALIFIED LOCAL CAPACITY</span>
+            <h4 class="text-3xl font-black" style="color: #38872c;">1.7M</h4>
+            <p class="text-[11px] text-zinc-400">Verified supplier capacity</p>
+          </div>
+
+          <div class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2">
+            <span class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase">CAPACITY GAP</span>
+            <h4 class="text-3xl font-black text-white">700K</h4>
+            <p class="text-[11px] text-zinc-400">Demand not currently covered</p>
+          </div>
+
+          <div class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2">
+            <span class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase">LOCAL GROWTH OPPORTUNITY →</span>
+            <h4 class="text-3xl font-black" style="color: #38872c;">700K</h4>
+            <p class="text-[11px] text-zinc-400">Click to explore the gap</p>
+          </div>
+        </div>
+
+        <!-- Ask POOL Interactive Section -->
+        <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl space-y-3 shadow-lg">
+          <div>
+            <h3 class="font-bold text-sm text-white">Ask POOL</h3>
+            <p class="text-xs text-zinc-400">Query national supplier capability directly.</p>
+          </div>
+
+          <form @submit.prevent="submitQuery" class="flex flex-col sm:flex-row gap-3">
+            <input type="text" v-model="userQuery"
+              placeholder="Can Saudi suppliers fulfil 650K units of Industrial X within 45 days?"
+              class="flex-1 bg-black border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none transition"
+              @focus="$event.target.style.borderColor = '#38872c'" @blur="$event.target.style.borderColor = '#27272a'">
+            <button type="submit" :disabled="loading"
+              class="text-black font-bold px-6 py-3 rounded-xl text-xs transition shrink-0 disabled:opacity-50"
+              style="background-color: #38872c;">
+              {{ loading ? 'Analyzing...' : 'Ask POOL' }}
+            </button>
+          </form>
+
+          <!-- Response display -->
+          <div v-if="aiResponse" class="p-4 bg-black rounded-xl text-xs text-zinc-300 mt-2"
+            style="border: 1px solid rgba(37, 150, 190, 0.3);">
+            <span class="font-bold block mb-1" style="color: #38872c;">POOL Intelligence Output:</span>
+            {{ aiResponse }}
+          </div>
+        </div>
+
       </main>
     </div>
   </div>
@@ -282,6 +215,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 
+// Authentication
 const isAuthenticated = ref(false)
 const loginLoading = ref(false)
 const loginError = ref('')
@@ -299,15 +233,6 @@ const userName = computed(() => {
     .join(' ')
 })
 
-const userInitials = computed(() => {
-  if (!loginForm.value.email) return 'U'
-  const parts = loginForm.value.email.split('@')[0].split('.')
-  if (parts.length > 1) {
-    return (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase()
-  }
-  return parts[0].substring(0, 2).toUpperCase()
-})
-
 const handleLogin = () => {
   loginLoading.value = true
   loginError.value = ''
@@ -316,30 +241,29 @@ const handleLogin = () => {
     if (loginForm.value.email && loginForm.value.password) {
       isAuthenticated.value = true
     } else {
-      loginError.value = 'Please enter valid credentials.'
+      loginError.value = 'Please provide valid login info.'
     }
     loginLoading.value = false
-  }, 1000)
+  }, 800)
 }
 
+// Dashboard Navigation & AI Query State
 const mobileMenuOpen = ref(false)
-const form = ref({
-  company: 'Al-Noor Contracting Co.',
-  material: 'Sand',
-  qty: ''
-})
+const activeTab = ref('Overview')
+const navItems = ['Overview', 'Demand Intelligence', 'National Capability Map', 'Smart Pool', 'Growth Opportunities']
 
+const userQuery = ref('Can Saudi suppliers fulfil 650K units of Industrial X within 45 days?')
 const loading = ref(false)
-const agentResponse = ref('')
+const aiResponse = ref('')
 
-const submitOrder = async () => {
-  if (!form.value.qty) return
+const submitQuery = () => {
+  if (!userQuery.value) return
   loading.value = true
-  agentResponse.value = ''
+  aiResponse.value = ''
 
   setTimeout(() => {
-    agentResponse.value = `Order reviewed successfully for [${form.value.company}]. The requested quantity (${form.value.qty} m³ of ${form.value.material}) is within quota limits and available in stock. Approved automatically.`
+    aiResponse.value = `Analysis for "${userQuery.value}": Qualified local suppliers across the network can cover 520K units within the timeline, leaving a capacity gap of 130K units recommended for local growth allocation.`
     loading.value = false
-  }, 1500)
+  }, 1200)
 }
 </script>
