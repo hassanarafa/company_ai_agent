@@ -3,7 +3,8 @@
     <!-- LOGIN VIEW -->
     <div v-if="!isAuthenticated" class="min-h-screen bg-black flex items-center justify-center p-6 text-white"
       dir="ltr">
-      <div class="max-w-md w-full bg-zinc-950 border border-zinc-800 p-8 rounded-2xl shadow-2xl space-y-6">
+      <div class="max-w-md w-full bg-zinc-950 border border-zinc-800 p-8 rounded-2xl shadow-2xl space-y-6 relative">
+
         <div class="text-center">
           <h1 class="text-3xl font-black tracking-widest text-white mb-1">PO<span style="color: #38872c;">O</span>L</h1>
           <p class="text-[9px] tracking-widest uppercase font-bold" style="color: #38872c;">Connecting Demand to Local
@@ -15,8 +16,7 @@
             <label class="block text-xs font-medium text-zinc-400 mb-1">Email Address</label>
             <input type="email" v-model="loginForm.email" placeholder="name@example.com" required
               class="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none transition"
-              style="focus-border-color: #38872c;" @focus="$event.target.style.borderColor = '#38872c'"
-              @blur="$event.target.style.borderColor = '#27272a'">
+              @focus="$event.target.style.borderColor = '#38872c'" @blur="$event.target.style.borderColor = '#27272a'">
           </div>
 
           <div>
@@ -26,11 +26,19 @@
               @focus="$event.target.style.borderColor = '#38872c'" @blur="$event.target.style.borderColor = '#27272a'">
           </div>
 
-          <button type="submit" :disabled="loginLoading"
-            class="w-full text-black font-extrabold py-3 rounded-xl text-xs transition shadow-lg disabled:opacity-50"
-            style="background-color: #38872c;">
-            {{ loginLoading ? 'Authenticating...' : 'Sign In' }}
-          </button>
+          <!-- Feature Alert Draft over Login Button -->
+          <div class="relative pt-3">
+            <span
+              class="absolute top-0 right-3 z-10 px-2 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-black rounded-full shadow-md animate-pulse"
+              style="background-color: #38872c;">
+              Secure Portal
+            </span>
+            <button type="submit" :disabled="loginLoading"
+              class="w-full text-black font-extrabold py-3 rounded-xl text-xs transition disabled:opacity-50"
+              style="background-color: #38872c; box-shadow: 0 4px 20px rgba(56, 135, 44, 0.35);">
+              {{ loginLoading ? 'Authenticating...' : 'Sign In' }}
+            </button>
+          </div>
         </form>
 
         <p v-if="loginError" class="text-xs text-red-500 text-center">{{ loginError }}</p>
@@ -74,7 +82,7 @@
               activeTab === item
                 ? 'bg-zinc-900 text-white shadow-inner'
                 : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'
-            ]" :style="activeTab === item ? 'border: 1px solid rgba(37, 150, 190, 0.4);' : ''">
+            ]" :style="activeTab === item ? 'border: 1px solid rgba(56, 135, 44, 0.4);' : ''">
               <span class="text-[10px] font-bold" style="color: #38872c;">0{{ index + 1 }}</span>
               <span>{{ item }}</span>
             </button>
@@ -116,9 +124,10 @@
         <div class="space-y-4">
           <h2 class="text-2xl font-bold tracking-tight text-white">Overview</h2>
 
-          <!-- Banner Card -->
+          <!-- Banner Card with Shadow/Glow -->
           <div
-            class="bg-zinc-950 border border-zinc-900 p-8 rounded-2xl shadow-xl relative overflow-hidden flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+            class="bg-zinc-950 border border-zinc-900 p-8 rounded-2xl shadow-xl relative overflow-hidden flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 transition-all hover:border-[#38872c]/40"
+            style="box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);">
             <div class="space-y-3 max-w-2xl">
               <span class="text-[10px] font-bold tracking-widest uppercase" style="color: #38872c;">POOL INTELLIGENCE
                 LAYER</span>
@@ -153,35 +162,48 @@
           </div>
         </div>
 
-        <!-- 4 Grid Metric Cards -->
+        <!-- 4 Grid Metric Cards with interactive shadow hover -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2">
+          <div
+            class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2 transition-all duration-300 hover:border-[#38872c]/40 hover:shadow-[0_8px_25px_rgba(56,135,44,0.15)]">
             <span class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase">AGGREGATED DEMAND</span>
             <h4 class="text-3xl font-black text-white">2.4M</h4>
             <p class="text-[11px] text-zinc-400">Across current buyer requests</p>
           </div>
 
-          <div class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2">
+          <div
+            class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2 transition-all duration-300 hover:border-[#38872c]/40 hover:shadow-[0_8px_25px_rgba(56,135,44,0.15)]">
             <span class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase">QUALIFIED LOCAL CAPACITY</span>
             <h4 class="text-3xl font-black" style="color: #38872c;">1.7M</h4>
             <p class="text-[11px] text-zinc-400">Verified supplier capacity</p>
           </div>
 
-          <div class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2">
+          <div
+            class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2 transition-all duration-300 hover:border-[#38872c]/40 hover:shadow-[0_8px_25px_rgba(56,135,44,0.15)]">
             <span class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase">CAPACITY GAP</span>
             <h4 class="text-3xl font-black text-white">700K</h4>
             <p class="text-[11px] text-zinc-400">Demand not currently covered</p>
           </div>
 
-          <div class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2">
+          <div
+            class="bg-zinc-950 border border-zinc-900 p-5 rounded-2xl space-y-2 transition-all duration-300 hover:border-[#38872c]/40 hover:shadow-[0_8px_25px_rgba(56,135,44,0.15)]">
             <span class="text-[10px] font-bold text-zinc-500 tracking-wider uppercase">LOCAL GROWTH OPPORTUNITY →</span>
             <h4 class="text-3xl font-black" style="color: #38872c;">700K</h4>
             <p class="text-[11px] text-zinc-400">Click to explore the gap</p>
           </div>
         </div>
 
-        <!-- Ask POOL Interactive Section -->
-        <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl space-y-3 shadow-lg">
+        <!-- Ask POOL Interactive Section with Draft Alert Badge -->
+        <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl space-y-3 relative shadow-xl">
+          <!-- Feature Alert Badge -->
+          <div class="absolute -top-3 right-6 z-10">
+            <span
+              class="px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-black rounded-full shadow-md"
+              style="background-color: #38872c;">
+              ✨ AI Agent Draft
+            </span>
+          </div>
+
           <div>
             <h3 class="font-bold text-sm text-white">Ask POOL</h3>
             <p class="text-xs text-zinc-400">Query national supplier capability directly.</p>
@@ -192,16 +214,17 @@
               placeholder="Can Saudi suppliers fulfil 650K units of Industrial X within 45 days?"
               class="flex-1 bg-black border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none transition"
               @focus="$event.target.style.borderColor = '#38872c'" @blur="$event.target.style.borderColor = '#27272a'">
+
             <button type="submit" :disabled="loading"
               class="text-black font-bold px-6 py-3 rounded-xl text-xs transition shrink-0 disabled:opacity-50"
-              style="background-color: #38872c;">
+              style="background-color: #38872c; box-shadow: 0 4px 20px rgba(56, 135, 44, 0.35);">
               {{ loading ? 'Analyzing...' : 'Ask POOL' }}
             </button>
           </form>
 
           <!-- Response display -->
           <div v-if="aiResponse" class="p-4 bg-black rounded-xl text-xs text-zinc-300 mt-2"
-            style="border: 1px solid rgba(37, 150, 190, 0.3);">
+            style="border: 1px solid rgba(56, 135, 44, 0.3);">
             <span class="font-bold block mb-1" style="color: #38872c;">POOL Intelligence Output:</span>
             {{ aiResponse }}
           </div>
