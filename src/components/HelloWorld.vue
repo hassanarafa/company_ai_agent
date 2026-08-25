@@ -237,7 +237,6 @@
           <h2 class="text-2xl font-bold tracking-tight text-white">Demand Intelligence</h2>
 
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Buyer Demand Input -->
             <div class="lg:col-span-2 bg-zinc-950 border border-zinc-900 p-6 rounded-2xl space-y-4 shadow-xl relative">
               <div class="absolute -top-3 right-6 z-10">
                 <span
@@ -264,7 +263,6 @@
               </button>
             </div>
 
-            <!-- AI Requirement Extraction Card -->
             <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl space-y-4 shadow-xl">
               <div>
                 <h3 class="font-bold text-sm text-white mb-1">AI requirement extraction</h3>
@@ -284,7 +282,6 @@
             </div>
           </div>
 
-          <!-- Demand Aggregation Table -->
           <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl space-y-4 shadow-xl">
             <div>
               <h3 class="font-bold text-sm text-white mb-1">Demand aggregation</h3>
@@ -315,8 +312,186 @@
           </div>
         </div>
 
+        <!-- ================= TAB 3: NATIONAL CAPABILITY MAP ================= -->
+        <div v-if="activeTab === 'National Capability Map'" class="space-y-6">
+          <h2 class="text-2xl font-bold tracking-tight text-white">National Capability Map</h2>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div
+              class="lg:col-span-2 bg-zinc-950 border border-zinc-900 p-6 rounded-2xl flex flex-col justify-between shadow-xl relative min-h-[420px]">
+              <div>
+                <h3 class="font-bold text-sm text-white mb-1">Regional Capabilities</h3>
+                <p class="text-[11px] text-zinc-400">Geospatial breakdown of active suppliers and verified regional
+                  capacity.</p>
+              </div>
+
+              <div
+                class="relative w-full h-80 my-auto flex items-center justify-center border border-zinc-900/80 bg-black/40 rounded-xl">
+                <svg class="absolute inset-0 w-full h-full p-4 opacity-50" viewBox="0 0 500 300" fill="none">
+                  <path d="M120,80 Q200,40 320,60 T420,140 Q450,220 350,250 T150,230 Q80,180 120,80 Z" stroke="#38872c"
+                    stroke-width="1.5" stroke-dasharray="4 4" fill="rgba(56,135,44,0.03)" />
+                </svg>
+
+                <div
+                  class="absolute top-12 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-xl text-center shadow-lg">
+                  <p class="text-xs font-bold text-white">Northern</p>
+                  <p class="text-[10px]" style="color: #38872c;">3 suppliers • 95K</p>
+                </div>
+                <div
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-xl text-center shadow-lg">
+                  <p class="text-xs font-bold text-white">Riyadh</p>
+                  <p class="text-[10px]" style="color: #38872c;">54 suppliers • 820K</p>
+                </div>
+                <div
+                  class="absolute bottom-12 left-12 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-xl text-center shadow-lg">
+                  <p class="text-xs font-bold text-white">Western</p>
+                  <p class="text-[10px]" style="color: #38872c;">19 suppliers • 270K</p>
+                </div>
+                <div
+                  class="absolute bottom-16 right-16 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-xl text-center shadow-lg">
+                  <p class="text-xs font-bold text-white">Eastern</p>
+                  <p class="text-[10px]" style="color: #38872c;">28 suppliers • 610K</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl space-y-4 shadow-xl">
+              <div>
+                <h3 class="font-bold text-sm text-white mb-1">Capability explorer</h3>
+                <p class="text-[11px] text-zinc-400">Qualified companies • capabilities • row materials • current
+                  capacity.</p>
+              </div>
+
+              <div class="space-y-3 text-xs">
+                <select
+                  class="w-full bg-black border border-zinc-800 rounded-xl p-2.5 text-zinc-300 focus:outline-none">
+                  <option>Industrial X</option>
+                  <option>Industrial Y</option>
+                </select>
+                <select
+                  class="w-full bg-black border border-zinc-800 rounded-xl p-2.5 text-zinc-300 focus:outline-none">
+                  <option>All regions</option>
+                  <option>Riyadh</option>
+                  <option>Eastern</option>
+                  <option>Western</option>
+                </select>
+                <div class="flex gap-2">
+                  <select
+                    class="flex-1 bg-black border border-zinc-800 rounded-xl p-2.5 text-zinc-300 focus:outline-none">
+                    <option>Qualified only</option>
+                    <option>All suppliers</option>
+                  </select>
+                  <input type="text" placeholder="Search supplier"
+                    class="flex-1 bg-black border border-zinc-800 rounded-xl p-2.5 text-zinc-300 focus:outline-none">
+                </div>
+              </div>
+
+              <div class="space-y-3 pt-2">
+                <div v-for="supplier in capabilitySuppliers" :key="supplier.name"
+                  class="bg-black border border-zinc-800 p-4 rounded-xl space-y-2 text-xs">
+                  <div class="flex justify-between items-center">
+                    <span class="font-bold text-white">{{ supplier.name }}</span>
+                    <span
+                      class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/50">{{
+                      supplier.match }} Match</span>
+                  </div>
+                  <p class="text-[11px] text-zinc-500">{{ supplier.desc }}</p>
+                  <div class="flex justify-between items-baseline pt-1 border-t border-zinc-900">
+                    <div>
+                      <p class="text-sm font-black text-white">{{ supplier.capacity }}</p>
+                      <span class="text-[9px] text-zinc-500 uppercase">Available capacity</span>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-[10px] text-zinc-400">{{ supplier.updated }}</p>
+                      <p class="text-[10px] font-bold" style="color: #38872c;">{{ supplier.confidence }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 4: SMART POOL ================= -->
+        <div v-if="activeTab === 'Smart Pool'" class="space-y-6">
+          <h2 class="text-2xl font-bold tracking-tight text-white">Smart Pool</h2>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Left Side: Fulfillment Requirement Card -->
+            <div
+              class="bg-zinc-950 border border-zinc-900 p-8 rounded-2xl space-y-6 shadow-xl flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-sm text-white mb-1">Can local suppliers fulfil the demand?</h3>
+              </div>
+
+              <div class="text-center py-6 space-y-2">
+                <span class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">BUYER REQUIREMENT</span>
+                <p class="text-4xl md:text-5xl font-black" style="color: #38872c;">650K</p>
+                <p class="text-xs text-zinc-300 font-medium">Industrial X • &le; 45 days</p>
+              </div>
+
+              <div class="bg-black border border-zinc-800 p-4 rounded-xl text-center text-xs text-zinc-400">
+                No single qualified supplier can fulfil the full requirement. POOL creates the best qualified
+                combination.
+              </div>
+            </div>
+
+            <!-- Right Side: Smart Supplier Pool & Optimization -->
+            <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl space-y-6 shadow-xl">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-bold text-sm text-white mb-1">Smart supplier pool</h3>
+                  <p class="text-[11px] text-zinc-400">Choose the optimization objective.</p>
+                </div>
+                <!-- Objective filter buttons -->
+                <div class="flex gap-1 bg-black p-1 rounded-xl border border-zinc-800 text-[10px]">
+                  <button class="px-3 py-1.5 rounded-lg font-bold text-black" style="background-color: #38872c;">Best
+                    Fit</button>
+                  <button class="px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">Lowest Cost</button>
+                  <button class="px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">Fastest</button>
+                </div>
+              </div>
+
+              <!-- Supplier Allocation List with Progress Bars -->
+              <div class="space-y-4">
+                <div v-for="item in smartPoolSuppliers" :key="item.name" class="space-y-1.5">
+                  <div class="flex justify-between text-xs">
+                    <div>
+                      <span class="font-bold text-white">{{ item.name }}</span>
+                      <span class="text-[10px] text-zinc-500 ml-2">{{ item.meta }}</span>
+                    </div>
+                    <span class="font-bold text-white">{{ item.allocated }}</span>
+                  </div>
+                  <!-- Progress Bar -->
+                  <div class="w-full bg-black h-2.5 rounded-full overflow-hidden border border-zinc-800/80">
+                    <div class="h-full rounded-full transition-all duration-500"
+                      :style="{ width: item.width, backgroundColor: '#38872c' }"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fulfillment Summary Box -->
+              <div class="bg-black border border-zinc-800 p-4 rounded-xl space-y-3 text-xs">
+                <div class="flex justify-between items-baseline">
+                  <span class="font-bold text-white">580K fulfilled - 89.2%</span>
+                  <span class="text-zinc-400 text-[11px]">Remaining unmet demand: <strong
+                      class="text-amber-400">70K</strong></span>
+                </div>
+                <button @click="convertGap"
+                  class="w-full font-bold py-2.5 rounded-xl text-xs transition text-black shadow-md flex items-center justify-center gap-2"
+                  style="background-color: #38872c;">
+                  <span>Convert 70K to Growth Opportunity</span>
+                  <span>→</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- ================= OTHER TABS PLACEHOLDER ================= -->
-        <div v-if="activeTab !== 'Overview' && activeTab !== 'Demand Intelligence'" class="space-y-6">
+        <div
+          v-if="activeTab !== 'Overview' && activeTab !== 'Demand Intelligence' && activeTab !== 'National Capability Map' && activeTab !== 'Smart Pool'"
+          class="space-y-6">
           <h2 class="text-2xl font-bold tracking-tight text-white">{{ activeTab }}</h2>
           <div class="bg-zinc-950 border border-zinc-900 p-8 rounded-2xl text-zinc-400 text-xs shadow-xl">
             Module for <span class="text-white font-bold">{{ activeTab }}</span> is linked and currently active in the
@@ -385,7 +560,7 @@ const submitQuery = () => {
   }, 1200)
 }
 
-// Demand Intelligence & Aggregation State (Linked)
+// Demand Intelligence & Aggregation State
 const demandText = ref('We need 650,000 units of Industrial X delivered within 45 days from qualified local suppliers.')
 const structuredDemand = ref({
   category: 'Industrial X',
@@ -410,5 +585,23 @@ const analyseDemand = () => {
     delivery: '45 days'
   })
   alert('Demand successfully analyzed, structured by AI, and linked to the National Demand Aggregation table!')
+}
+
+// National Capability Map Data
+const capabilitySuppliers = ref([
+  { name: 'Supplier A', match: '94%', desc: 'Fabrication • Steel Grade X • Riyadh', capacity: '400K', updated: 'Updated 2h ago', confidence: 'High confidence' },
+  { name: 'Supplier B', match: '91%', desc: 'Manufacturing • Material X • Eastern', capacity: '300K', updated: 'Updated 5h ago', confidence: 'High confidence' },
+  { name: 'Supplier C', match: '83%', desc: 'Assembly • Component X • Western', capacity: '250K', updated: 'Updated 1d ago', confidence: 'Medium confidence' }
+])
+
+// Smart Pool Data
+const smartPoolSuppliers = ref([
+  { name: 'Supplier A', meta: '94% match • Qualified', allocated: '250K', width: '75%' },
+  { name: 'Supplier B', meta: '91% match • Qualified', allocated: '200K', width: '60%' },
+  { name: 'Supplier C', meta: '88% match • Qualified', allocated: '130K', width: '40%' }
+])
+
+const convertGap = () => {
+  activeTab.value = 'Growth Opportunities'
 }
 </script>
