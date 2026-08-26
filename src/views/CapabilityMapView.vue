@@ -3,76 +3,125 @@
         <h2 class="text-2xl font-bold tracking-tight text-white">National Capability Map</h2>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Left Side: Regional Map Graphic Box -->
+            <!-- Left Side: Map Box -->
             <div
-                class="lg:col-span-2 bg-zinc-950 border border-zinc-900 p-6 rounded-2xl flex flex-col justify-between shadow-xl relative min-h-[460px]">
-                <div>
-                    <h3 class="font-bold text-sm text-white mb-1">Regional Capabilities</h3>
-                    <p class="text-[11px] text-zinc-400">Geospatial breakdown of active suppliers and verified regional
-                        capacity.</p>
+                class="lg:col-span-2 bg-zinc-950 border border-zinc-900 p-6 rounded-2xl flex flex-col justify-between shadow-xl relative min-h-[520px]">
+
+                <!-- Header Info inside map box -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h3 class="font-bold text-sm text-white mb-1">Saudi supply intelligence</h3>
+                        <p class="text-[11px] text-zinc-400">Click a capacity node to inspect regional supplier
+                            strength.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="bg-black border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full text-[10px] font-semibold">104
+                            suppliers</span>
+                        <span
+                            class="bg-black border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full text-[10px] font-semibold"
+                            style="color: #38872c;">1.795M verified capacity</span>
+                    </div>
                 </div>
 
-                <!-- Map Visual Container -->
+                <!-- Map Container with Perfect Coordinates Adjustment -->
                 <div
-                    class="relative w-full h-96 my-auto flex items-center justify-center border border-zinc-900/80 bg-black/40 rounded-xl overflow-hidden">
+                    class="relative w-full h-[420px] my-auto flex items-center justify-center border border-zinc-900 bg-black rounded-xl overflow-hidden mt-4">
 
-                    <!-- Custom Refined Network Boundary SVG -->
-                    <svg class="absolute inset-0 w-full h-full p-6 opacity-60 pointer-events-none" viewBox="0 0 600 350"
-                        fill="none">
-                        <!-- Outer Connected Network Polygon Shape -->
-                        <path
-                            d="M300,45 C420,45 520,110 520,175 C520,240 420,305 300,305 C180,305 80,240 80,175 C80,110 180,45 300,45 Z"
-                            stroke="#38872c" stroke-width="1.5" stroke-dasharray="6 6" fill="rgba(56,135,44,0.04)" />
+                    <!-- Map Image Background -->
+                    <img src="@/assets/map.jpg" alt="Saudi Arabia Map"
+                        class="absolute inset-0 w-full h-full object-cover opacity-85" />
 
-                        <!-- Connection Lines from Riyadh Center to each Node -->
-                        <line x1="300" y1="175" x2="300" y2="75" stroke="#38872c" stroke-width="1.5"
-                            stroke-opacity="0.5" />
-                        <line x1="300" y1="175" x2="140" y2="235" stroke="#38872c" stroke-width="1.5"
-                            stroke-opacity="0.5" />
-                        <line x1="300" y1="175" x2="460" y2="235" stroke="#38872c" stroke-width="1.5"
-                            stroke-opacity="0.5" />
-                    </svg>
+                    <!-- Kingdom Label -->
+                    <span
+                        class="absolute top-4 left-6 text-[10px] font-bold uppercase tracking-widest text-white bg-black/80 px-2.5 py-1 rounded border border-zinc-800 z-20">Kingdom
+                        of Saudi Arabia</span>
 
-                    <!-- Northern Region Node -->
+                    <!-- Northern Node (Purple) -> Adjusted North/Hail position -->
                     <div
-                        class="absolute top-10 left-1/2 -translate-x-1/2 bg-zinc-900/95 border border-zinc-800 px-5 py-2.5 rounded-xl text-center shadow-2xl transition hover:border-[#38872c]">
-                        <p class="text-xs font-bold text-white">Northern</p>
-                        <p class="text-[10px]" style="color: #38872c;">3 suppliers • 95K</p>
+                        class="absolute top-[36%] left-[41%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer group z-10">
+                        <div
+                            class="w-10 h-10 rounded-full bg-purple-950 border-2 border-purple-500 flex items-center justify-center text-white font-bold text-xs shadow-lg group-hover:scale-110 transition">
+                            3
+                        </div>
+                        <div
+                            class="bg-black/90 border border-zinc-800 px-2.5 py-1 rounded-lg mt-1 text-center shadow-md backdrop-blur-sm">
+                            <p class="text-[11px] font-bold text-white">Northern</p>
+                            <p class="text-[9px] text-purple-400 font-medium">95K capacity</p>
+                        </div>
                     </div>
 
-                    <!-- Riyadh Central Node -->
+                    <!-- Riyadh Node (Green - Center) -> Adjusted exact Riyadh position -->
                     <div
-                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-900/95 border border-zinc-800 px-5 py-3 rounded-xl text-center shadow-2xl transition hover:border-[#38872c]">
-                        <p class="text-xs font-bold text-white">Riyadh</p>
-                        <p class="text-[10px]" style="color: #38872c;">54 suppliers • 820K</p>
+                        class="absolute top-[58%] left-[54%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer group z-10">
+                        <div class="w-14 h-14 rounded-full bg-emerald-950 border-2 border-emerald-500 flex items-center justify-center text-white font-extrabold text-sm shadow-xl group-hover:scale-110 transition"
+                            style="box-shadow: 0 0 25px rgba(56,135,44,0.8);">
+                            54
+                        </div>
+                        <div
+                            class="bg-black/90 border border-zinc-800 px-3 py-1 rounded-lg mt-1 text-center shadow-md backdrop-blur-sm">
+                            <p class="text-[11px] font-bold text-white">Riyadh</p>
+                            <p class="text-[9px] text-emerald-400 font-medium">820K capacity</p>
+                        </div>
                     </div>
 
-                    <!-- Western Region Node -->
+                    <!-- Eastern Node (Orange) -> Adjusted Eastern Province position -->
                     <div
-                        class="absolute bottom-10 left-12 bg-zinc-900/95 border border-zinc-800 px-5 py-2.5 rounded-xl text-center shadow-2xl transition hover:border-[#38872c]">
-                        <p class="text-xs font-bold text-white">Western</p>
-                        <p class="text-[10px]" style="color: #38872c;">19 suppliers • 270K</p>
+                        class="absolute top-[57%] right-[24%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer group z-10">
+                        <div
+                            class="w-12 h-12 rounded-full bg-amber-950 border-2 border-amber-500 flex items-center justify-center text-white font-bold text-xs shadow-lg group-hover:scale-110 transition">
+                            28
+                        </div>
+                        <div
+                            class="bg-black/90 border border-zinc-800 px-2.5 py-1 rounded-lg mt-1 text-center shadow-md backdrop-blur-sm">
+                            <p class="text-[11px] font-bold text-white">Eastern</p>
+                            <p class="text-[9px] text-amber-400 font-medium">610K capacity</p>
+                        </div>
                     </div>
 
-                    <!-- Eastern Region Node -->
+                    <!-- Western Node (Yellow) -> Adjusted Makkah/Madinah Western position -->
                     <div
-                        class="absolute bottom-10 right-12 bg-zinc-900/95 border border-zinc-800 px-5 py-2.5 rounded-xl text-center shadow-2xl transition hover:border-[#38872c]">
-                        <p class="text-xs font-bold text-white">Eastern</p>
-                        <p class="text-[10px]" style="color: #38872c;">28 suppliers • 610K</p>
+                        class="absolute top-[67%] left-[42%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer group z-10">
+                        <div
+                            class="w-11 h-11 rounded-full bg-yellow-950 border-2 border-yellow-500 flex items-center justify-center text-white font-bold text-xs shadow-lg group-hover:scale-110 transition">
+                            19
+                        </div>
+                        <div
+                            class="bg-black/90 border border-zinc-800 px-2.5 py-1 rounded-lg mt-1 text-center shadow-md backdrop-blur-sm">
+                            <p class="text-[11px] font-bold text-white">Western</p>
+                            <p class="text-[9px] text-yellow-400 font-medium">270K capacity</p>
+                        </div>
                     </div>
 
                 </div>
+
+                <!-- Footer Legend -->
+                <div
+                    class="flex flex-wrap items-center justify-between text-[10px] text-zinc-500 pt-3 border-t border-zinc-900 mt-2">
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-zinc-400"></span>
+                        <span>Node size = verified capacity</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full" style="background-color: #38872c;"></span>
+                        <span>Click = region drill-down</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-zinc-600"></span>
+                        <span>Data shown = prototype values</span>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Right Side: Capability Explorer & Supplier Cards -->
+            <!-- Right Side: Capability Explorer -->
             <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-2xl space-y-4 shadow-xl">
                 <div>
                     <h3 class="font-bold text-sm text-white mb-1">Capability explorer</h3>
-                    <p class="text-[11px] text-zinc-400">Qualified companies • capabilities • row materials • current
+                    <p class="text-[11px] text-zinc-400">Qualified companies • capabilities • raw materials • current
                         capacity.</p>
                 </div>
 
-                <!-- Filters -->
                 <div class="space-y-3 text-xs">
                     <select
                         class="w-full bg-black border border-zinc-800 rounded-xl p-2.5 text-zinc-300 focus:outline-none">
@@ -97,7 +146,6 @@
                     </div>
                 </div>
 
-                <!-- Supplier Match Cards -->
                 <div class="space-y-3 pt-2">
                     <div v-for="supplier in capabilitySuppliers" :key="supplier.name"
                         class="bg-black border border-zinc-800 p-4 rounded-xl space-y-2 text-xs">
@@ -105,7 +153,7 @@
                             <span class="font-bold text-white">{{ supplier.name }}</span>
                             <span
                                 class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/50">{{
-                                supplier.match }} Match</span>
+                                    supplier.match }} Match</span>
                         </div>
                         <p class="text-[11px] text-zinc-500">{{ supplier.desc }}</p>
                         <div class="flex justify-between items-baseline pt-1 border-t border-zinc-900">
